@@ -5,6 +5,7 @@ import myimg from './delete1.png'
 export default function Home() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
+  const [inputError, setInputError] = useState('');
 
   useEffect(() => {
     const loadTasks = () => {
@@ -31,6 +32,9 @@ export default function Home() {
     if (newTask.trim()) {
       setTasks([...tasks, { id: Date.now(), text: newTask, completed: false }]);
       setNewTask('');
+      setInputError('');
+    } else {
+      setInputError('Please enter a task');
     }
   }
 
@@ -61,9 +65,17 @@ export default function Home() {
             id="taskInput"
             type="text"
             value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
+            onChange={(e) => {
+              setNewTask(e.target.value);
+              if (e.target.value.trim()) {
+                setInputError('');
+              }
+            }}
             aria-label="Enter a new task"
+            aria-invalid={inputError ? "true" : "false"}
+            aria-describedby="taskInputError"
           />
+          {inputError && <span id="taskInputError" className="error-message">{inputError}</span>}
           <button onClick={addTask} aria-label="Add task">ADD</button>
           <button onClick={clearAll} aria-label="Clear all tasks">Clear All</button>
           <div>

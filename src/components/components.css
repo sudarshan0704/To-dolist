@@ -108,5 +108,10 @@ height: auto;
 background-color: rgb(47, 44, 44);
   }
   
-
+  .error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+  }
   
